@@ -1,6 +1,8 @@
 // 1. Estado inicial del héroe
 let vida = 100;
 let oro = 50;
+let tieneLlave = false;
+let idiomaActual = "es"; // "es" para español, "en" para inglés
 
 // 2. La función principal que controla el juego
 function siguienteEscena(numeroEscena) {
@@ -63,3 +65,61 @@ btnMusica.addEventListener('click', () => {
         btnMusica.innerText = "🎵 Reproducir Música";
     }
 });
+function cambiarIdioma() {
+    let boton = document.getElementById("btn-idioma");
+    let titulo = document.getElementById("titulo-escena");
+    let texto = document.getElementById("texto-escena");
+    let opcionesDiv = document.getElementById("contenedor-opciones");
+
+    // Intercambiamos el idioma
+    if (idiomaActual === "es") {
+        idiomaActual = "en";
+        boton.textContent = "🇦🇷 Cambiar a Español";
+    } else {
+        idiomaActual = "es";
+        boton.textContent = "🇺🇸 Switch to English";
+    }
+
+    // Buscamos qué escena está dibujada en pantalla para traducirla al instante
+    let escenaActual = titulo.textContent;
+
+    // --- Traducción de la Escena Inicial (El Despertar) ---
+    if (escenaActual === "El Despertar" || escenaActual === "The Awakening") {
+        if (idiomaActual === "en") {
+            titulo.textContent = "The Awakening";
+            texto.textContent = "You wake up in the dungeon of an abandoned tower. The atmosphere is cold and you hear the echo of dripping water. On the stone wall you see a nearly burnt-out torch and the wooden door has a loose lock.";
+            opcionesDiv.innerHTML = `
+                <button class="btn-opcion" onclick="siguienteEscena(1)">🔥 Grab the torch and explore the back</button>
+                <button class="btn-opcion" onclick="siguienteEscena(2)">🚪 Force the door lock</button>
+            `;
+        } else {
+            titulo.textContent = "El Despertar";
+            texto.textContent = "Te despertás en el calabozo de una torre abandonada. El ambiente es frío y se se escucha el eco de unas gotas de agua. En la pared de piedra ves una antorcha casi apagada y la puerta de madera tiene el cerrojo flojo.";
+            opcionesDiv.innerHTML = `
+                <button class="btn-opcion" onclick="siguienteEscena(1)">🔥 Agarrar la antorcha y explorar el fondo</button>
+                <button class="btn-opcion" onclick="siguienteEscena(2)">🚪 Forzar el cerrojo de la puerta</button>
+            `;
+        }
+    }
+    
+    // --- Traducción de la Escena 1 (El Fondo de la Torre) ---
+    else if (escenaActual === "🔥 El Fondo de la Torre" || escenaActual === "🔥 The Bottom of the Tower") {
+        if (idiomaActual === "en") {
+            titulo.textContent = "🔥 The Bottom of the Tower";
+            texto.textContent = "As you grab the torch, a giant bat jumps from the ceiling and bites your shoulder. Looking at the ground, you discover a pouch with 15 gold coins.";
+            opcionesDiv.innerHTML = `
+                <button class="btn-opcion" onclick="siguienteEscena(3)">🚪 Go back to the door with the gold</button>
+                <button class="btn-opcion" onclick="siguienteEscena(4)">🕳️ Go down a hole in the floor</button>
+            `;
+        } else {
+            titulo.textContent = "🔥 El Fondo de la Torre";
+            texto.textContent = "Al agarrar la antorcha, un murciélago gigante salta del techo y te muerde el hombro. Al mirar el suelo, descubres una bolsa con 15 monedas de oro.";
+            opcionesDiv.innerHTML = `
+                <button class="btn-opcion" onclick="siguienteEscena(3)">🚪 Volver a la puerta con el oro</button>
+                <button class="btn-opcion" onclick="siguienteEscena(4)">🕳️ Bajar por un agujero en el suelo</button>
+            `;
+        }
+    }
+    
+    // [Nota de Agustín: Después podés seguir agregando "else if" para las demás escenas]
+}
