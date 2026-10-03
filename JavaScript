@@ -1,0 +1,65 @@
+// 1. Estado inicial del héroe
+let vida = 100;
+let oro = 50;
+
+// 2. La función principal que controla el juego
+function siguienteEscena(numeroEscena) {
+    // Buscamos los elementos del HTML para poder cambiarlos
+    let titulo = document.getElementById("titulo-escena");
+    let texto = document.getElementById("texto-escena");
+    let opcionesDiv = document.getElementById("contenedor-opciones");
+    let textoVida = document.getElementById("puntos-vida");
+    let textoOro = document.getElementById("puntos-oro");
+
+    // --- ESCENA 1: Agarrar la antorcha ---
+    if (numeroEscena === 1) {
+        vida = vida - 20; // Te quemás o te ataca una criatura
+        oro = oro + 15;   // Encontrás monedas en el suelo
+
+        titulo.textContent = "🔥 El Fondo de la Torre";
+        texto.textContent = "Al agarrar la antorcha, un murciélago gigante salta del techo y te muerde el hombro antes de huir. Al mirar el suelo ensangrentado, descubres una pequeña bolsa con 15 monedas de oro.";
+        // Cambiamos los botones para la próxima decisión
+        opcionesDiv.innerHTML = `
+            <button class="btn-opcion" onclick="siguienteEscena(3)">🚪 Volver a la puerta con el oro</button>
+            <button class="btn-opcion" onclick="siguienteEscena(4)">🕳️ Bajar por un agujero en el suelo</button>
+        `;
+    }
+
+    // --- ESCENA 2: Forzar el cerrojo ---
+    else if (numeroEscena === 2) {
+        titulo.textContent = "🚪 El Pasillo de los Guardias";
+        texto.textContent = "Logras abrir el cerrojo oxidado con un fuerte empujón. La puerta rechina y te encuentras en un largo pasillo de piedra iluminado por antorchas. A lo lejos, escuchas los pasos metálicos de una patrulla.";
+        
+        opcionesDiv.innerHTML = `
+            <button class="btn-opcion" onclick="siguienteEscena(5)">👤 Esconderte en las sombras</button>
+            <button class="btn-opcion" onclick="siguienteEscena(6)">⚔️ Prepararte para pelear desarmado</button>
+        `;
+    }
+
+    // 3. Actualizamos la pantalla del celular con la vida y el oro actuales
+    textoVida.textContent = vida;
+    textoOro.textContent = oro;
+
+    // 4. Condición de derrota: ¿Qué pasa si te quedás sin vida?
+    if (vida <= 0) {
+        titulo.textContent = "💀 HAS MUERTO";
+        texto.textContent = "Tus heridas fueron muy graves para tu cuerpo. Tu aventura en Eldoria termina aquí.";
+        opcionesDiv.innerHTML = `<button class="btn-opcion" onclick="location.reload()">🔄 Reintentar desde el principio</button>`;
+        textoVida.textContent = "0";
+    }
+}
+const musica = document.getElementById('musica-medieval');
+const btnMusica = document.getElementById('btn-musica');
+
+// Bajamos un poco el volumen para que no tape el texto (va de 0.0 a 1.0)
+musica.volume = 0.3; 
+
+btnMusica.addEventListener('click', () => {
+    if (musica.paused) {
+        musica.play();
+        btnMusica.innerText = "⏸️ Pausar Música";
+    } else {
+        musica.pause();
+        btnMusica.innerText = "🎵 Reproducir Música";
+    }
+});
