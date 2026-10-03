@@ -1,0 +1,105 @@
+/* 1. Fondo general del juego (Estilo calabozo oscuro) */
+body {
+    background-color: #1a1a1e;
+    color: #e2e8f0;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    padding: 15px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 2. Barra de Estado (Vida y Oro) fija arriba */
+#panel-personaje {
+    background-color: #2d2d34;
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px;
+    border-radius: 10px;
+    border-bottom: 3px solid #d4af37; /* Línea color Oro medieval */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    margin-top: 10px;
+    margin-bottom: 25px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+#puntos-vida {
+    color: #ff4a4a; /* Rojo brillante para la salud */
+}
+
+#puntos-oro {
+    color: #ffd700; /* Dorado para las monedas */
+}
+
+/* 3. El contenedor principal de la aventura */
+#pantalla-juego {
+    background-color: #232329;
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+    border-left: 5px solid #8b5cf6; /* Detalle violeta místico */
+}
+
+/* Título de la escena */
+#titulo-escena {
+    color: #a78bfa;
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #3f3f46;
+    padding-bottom: 8px;
+}
+
+/* Texto de la narración */
+#texto-escena {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #cbd5e1;
+    margin-bottom: 25px;
+}
+
+/* 4. Los botones de acción diseñados para tus pulgares */
+.btn-opcion {
+    background-color: #2e2e38;
+    color: #f1f5f9;
+    border: 1px solid #4b5563;
+    width: 100%; /* Ocupan todo el ancho del cuadro para tocar fácil */
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: left; /* Texto alineado a la izquierda tipo RPG de consola */
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+}
+
+/* Efecto visual al tocar el botón en el celular */
+.btn-opcion:active {
+    background-color: #8b5cf6; /* Se vuelve violeta al presionarlo */
+    border-color: #c084fc;
+    transform: scale(0.98); /* Pequeño efecto de hundimiento táctil */
+}
+.boton-musica {
+    background-color: #2c1d11; /* Color madera/oscuro */
+    color: #f3e5ab; /* Color oro viejo / pergamino */
+    border: 2px solid #8b5a2b;
+    padding: 8px 15px;
+    font-family: serif;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    transition: background 0.3s;
+}
+
+.boton-musica:hover {
+    background-color: #4a3319; /* Cambia de color al pasar el mouse */
+}
+
