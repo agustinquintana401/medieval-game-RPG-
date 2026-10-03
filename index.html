@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crónicas de Eldoria</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- El reproductor de audio con una música medieval de fondo gratuita -->
+<audio id="musica-medieval" loop src="https://soundhelix.com"></audio>
+
+<!-- El botón para controlar la música -->
+<button id="btn-musica" class="boton-musica">🎵 Reproducir Música</button>
+  
+
+    <!-- Panel de Estado (Vida y Oro) -->
+    <div id="panel-personaje">
+        <span>❤️ Vida: <strong id="puntos-vida">100</strong>/100</span>
+        <span>💰 Oro: <strong id="puntos-oro">50</strong></span>
+    </div>
+
+    <!-- Contenedor ÚNICO del Juego -->
+    <div id="pantalla-juego">
+        <h1 id="titulo-escena">El Despertar</h1>
+        <p id="texto-escena">Te despertás en el calabozo de una torre abandonada. El ambiente es frío y se se escucha el eco de unas gotas de agua. En la pared de piedra ves una antorcha casi apagada y la puerta de madera tiene el cerrojo flojo.</p>
+        
+        <div id="contenedor-opciones">
+            <button class="btn-opcion" onclick="siguienteEscena(1)">🔥 Agarrar la antorcha y explorar el fondo</button>
+            <button class="btn-opcion" onclick="siguienteEscena(2)">🚪 Forzar el cerrojo de la puerta</button>
+        </div>
+    </div>
+
+    <!-- LÓGICA DE JAVASCRIPT LIMPIA -->
+    <script>
+let vida = 100;
+let oro = 50;
+let tieneLlave = false;
+
+function siguienteEscena(numeroEscena) {
+    let titulo = document.getElementById("titulo-escena");
+    let texto = document.getElementById("texto-escena");
+    let opcionesDiv = document.getElementById("contenedor-opciones");
+    let textoVida = document.getElementById("puntos-vida");
+    let textoOro = document.getElementById("puntos-oro");
+
+    // --- ESCENA 1: Agarrar la antorcha ---
+    if (numeroEscena === 1) {
+        vida = vida - 20;
+        oro = oro + 15;
+        titulo.textContent = "🔥 El Fondo de la Torre";
+        texto.textContent = "Al agarrar la antorcha, un murciélago gigante salta del techo y te muerde el hombro. Al mirar el suelo, descubres una bolsa con 15 monedas de oro.";
+        opcionesDiv.innerHTML = `
+            <button class="btn-opcion" onclick="siguienteEscena(3)">🚪 Volver a la puerta con el oro</button>
+            <button class="btn-opcion" onclick="siguienteEscena(4)">🕳️ Bajar por un agujero en el suelo</button>
+        `;
+    }
+    // --- ESCENA 2: Forzar el cerrojo ---
+    else if (numeroEscena === 2) {
+        titulo.textContent = "🚪 El Pasillo de los Guardias";
+        texto.textContent = "Logras abrir el cerrojo oxidado con un fuerte empujón. Te encuentras en un largo pasillo de piedra. A lo lejos, escuchas los pasos metálicos de una patrulla.";
+        opcionesDiv.innerHTML = `
+            <button class="btn-opcion" onclick="siguienteEscena(5)">👤 Esconderte en las sombras</button>
+            <button class="btn-opcion" onclick="siguienteEscena(6)">⚔️ Prepararte para pelear desarmado</button>
+        `;
+    }
+    // --- ESCENA 3: Volver a la puerta ---
+    else if (numeroEscena === 3) {
+        vida = vida - 10;
+        titulo.textContent = "🚪 Salida de Emergencia";
+        texto.textContent = "Con el hombro sangrando y la antorcha en mano, embistes la puerta de madera. Cuesta esfuerzo y te lastimas un poco más, pero logras salir al pasillo principal. ¡Escuchas guardias cerca!";
+        opcionesDiv.innerHTML = `
+            <button class="btn-opcion" onclick="siguienteEscena(5)">👤 Apagar la antorcha y esconderte</button>
+            <button class="btn-opcion" onclick="siguienteEscena(6)">⚔️ Usar la antorcha como arma</button>
+        `;
+    }
+    // --- ESCENA 4: El agujero misterioso ---
+    else if (numeroEscena === 4) {
+        vida = vida - 15;
+        oro = oro + 100;
+        titulo.textContent = "🕳️ La Cámara del Tesoro Oculto";
+        texto.textContent = "Resbalas por el agujero oscuro y caes sobre un montón de monedas antiguas. Desafortunadamente, un pincho de hierro te corta la pierna al caer. ¡Pero encontraste 100 monedas de oro!";
+        opcionesDiv.innerHTML = `
+            <button class="btn-opcion" onclick="siguienteEscena(7)">🧗 Escalar las rocas hacia la salida</button>
+        `;
+    }
+    // --- ESCENA 5: Esconderse en las sombras ---
+    else if (numeroEscena === 5) {
+        tieneLlave = true;
+        titulo.textContent = "👤 Entre las Sombras";
+        texto.textContent = "Te pegas a la pared húmeda rezando para no ser visto. El guardia blindado pasa justo a tu lado sin notar tu presencia. Al alejarse, notas que algo brilla en el suelo: ¡Se le cayó la llave de la armería!";
+        opcionesDiv.innerHTML = `
+            <button class="btn-opcion" onclick="siguienteEscena(8)">🔑 Avanzar hacia la puerta del fondo</button>
+        `;
+    }
+    // --- ESCENA 6: Pelear desarmado / Con antorcha ---
+    else if (numeroEscena === 6) {
+        vida = vida - 50;
+        titulo.textContent = "⚔️ Combate en el Pasillo";
+        texto.textContent = "Te lanzas ferozmente contra el guardia. Te asesta un tremendo golpe con el mango de su lanza que casi te desmaya, pero logras tirarlo al suelo y noquearlo. Le quitas su casco y su escudo.";
+        opcionesDiv.innerHTML = `
+            <button class="btn-opcion" onclick="siguienteEscena(8)">🛡️ Avanzar equipado con el escudo</button>
+        `;
+    }
+
+    // ==========================================
+    // NUEVAS ESCENAS: EL CAMINO AL JEFE FINAL
+    // ==========================================
+
+    // --- ESCENA 7: Escalar desde el tesoro ---
+    else if (numeroEscena === 7) {
+        titulo.textContent = "👹 El Altar del Alcaide";
+        texto.textContent = "Escalas las piedras con bolsillos llenos de oro y apareces directamente en el salón principal. Frente a ti se alza el Alcaide del Calabozo, un verdugo gigante con un hacha enorme. ¡Te vio!";
+        opcionesDiv.innerHTML = `
+            <button class="btn-opcion" onclick="siguienteEscena(9)">💰 Arrojarle tu oro para distraerlo</button>
+            <button class="btn-opcion" onclick="siguienteEscena(11)">🏃 Intentar esquivarlo y correr a la salida</button>
+        `;
+    }
+    // --- ESCENA 8: La puerta del fondo ---
+    else if (numeroEscena === 8) {
+        titulo.textContent = "👹 El Altar del Alcaide";
+        texto.textContent = "Abres la gran puerta de hierro y entras al salón principal. El Alcaide te corta el paso. Si te escondiste, tienes la llave de la armería. Si peleaste, tienes un escudo.";
+        
+        // El juego decide qué botones darte según tus variables
+        if (tieneLlave) {
+            opcionesDiv.innerHTML = `
+                <button class="btn-opcion" onclick="siguienteEscena(10)">🔑 Usar la llave para abrir la armería rápida y buscar una espada</button>
+                <button class="btn-opcion" onclick="siguienteEscena(11)">🏃 Intentar esquivarlo y correr</button>
+            `;
+        } else {
+            opcionesDiv.innerHTML = `
+                <button class="btn-opcion" onclick="siguienteEscena(10)">🛡️ Bloquear su hacha con el escudo robado</button>
+                <button class="btn-opcion" onclick="siguienteEscena(11)">🏃 Intentar esquivarlo y correr</button>
+            `;
+        }
+    }
+
+    // ==========================================
+    // FINALES DEL JUEGO
+    // ==========================================
+
+    // --- FINAL 1: Estrategia de Combate / Oro ---
+    else if (numeroEscena === 10 || (numeroEscena === 9 && oro >= 100)) {
+        if (numeroEscena === 9) {
+            oro = 0; // Perdés el oro pero te salvás
+            texto.textContent = "💰 El Alcaide, cegado por la codicia, se tira al suelo a juntar las 100 monedas de oro. Aprovechas el momento para pasar corriendo a su lado y cruzar el puente levadizo. ¡Lograste escapar con vida!";
+        } else if (tieneLlave) {
+            texto.textContent = "⚔️ Abres la armería en un segundo, agarras una espada reluciente y esquivas el golpe del Alcaide. Con un movimiento ágil lo derrotas y abres las puertas principales. ¡Eres libre y tienes la llave del castillo!";
+        } else {
+            vida = vida - 20; // El escudo absorbe casi todo el daño
+            texto.textContent = "🛡️ El hacha del verdugo impacta contra tu escudo robado provocando chispas. El escudo se rompe, pero te da el tiempo justo para empujarlo contra unas antorchas y escapar por la puerta principal de Eldoria. ¡Felicidades!";
+        }
+        titulo.textContent = "👑 ¡VICTORIA!";
+        opcionesDiv.innerHTML = `<button class="btn-opcion" onclick="location.reload()">🔄 Jugar de nuevo</button>`;
+    }
+    // --- FINAL 2: El Alcaide te atrapa si tirás poco oro ---
+    else if (numeroEscena === 9 && oro < 100) {
+        vida = 0;
+        titulo.textContent = "💀 HAS MUERTO";
+        texto.textContent = "Le tiras tus pocas monedas, pero el Alcaide se ríe de tu miserable botín. De un solo hachazo termina con tu viaje.";
+        opcionesDiv.innerHTML = `<button class="btn-opcion" onclick="location.reload()">🔄 Reintentar</button>`;
+    }
+    // --- FINAL 3: Correr desesperadamente ---
+    else if (numeroEscena === 11) {
+        vida = vida - 40; // Daño por correr sin defenderse
+        if (vida > 0) {
+            titulo.textContent = "🏃 ESCAPE AL LÍMITE";
+            texto.textContent = "Te lanzas en velocidad hacia la luz del exterior. El hacha del Alcaide te roza la espalda causándote un corte profundo, pero el impulso te saca de la torre. Caes rodando en el pasto del bosque. ¡Herido, pero libre!";
+            opcionesDiv.innerHTML = `<button class="btn-opcion" onclick="location.reload()">🔄 Jugar de nuevo</button>`;
+        }
+    }
+
+    // Actualización automática de marcadores
+    textoVida.textContent = vida;
+    textoOro.textContent = oro;
+
+    // Control del Game Over general
+    if (vida <= 0) {
+        titulo.textContent = "💀 HAS MUERTO";
+        texto.textContent = "Tus heridas fueron muy graves para tu cuerpo. Tu aventura en Eldoria termina aquí.";
+        opcionesDiv.innerHTML = `<button class="btn-opcion" onclick="location.reload()">🔄 Reintentar desde el principio</button>`;
+        textoVida.textContent = "0";
+    }
+          }
+    </script>
+</body>
+</html>
